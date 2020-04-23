@@ -1,31 +1,28 @@
 package Source;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 
-public class FileSource extends Source{
-    private FileInputStream source;
+public class FileSource extends Source {
+    private InputStreamReader source;
     private boolean isOpened;
 
-    public FileSource(String filePath){
+    public FileSource(String filePath) {
         openFile(filePath);
-        currentRow = 1;
-        currentColumn = 1;
-    }
-    @Override
-    public boolean consume(){
-        if (isOpened) {
-            readCharacter();
-            incrementCurrentPosition();
-            return true;
-        }
-        else
-            return false;
+        readCharacter();
+        setInitialCoordinates();
     }
 
-    private void readCharacter(){
+    @Override
+    public boolean consume() {
+        if (!isOpened)
+            return false;
+        readCharacter();
+        updateCoordinates();
+        return true;
+    }
+    public boolean isOpened() { return isOpened; }
+
+    private void readCharacter() {
         try {
             int character = source.read();
             if (!isEOF(character))
@@ -38,28 +35,25 @@ public class FileSource extends Source{
             System.exit(-1);
         }
     }
-    private void incrementCurrentPosition() {
-        if (currentChar == '\n')
-        {
-            currentRow++;
-            currentColumn = 0;
-        }
-        else
-            currentColumn++;
-    }
-    private boolean isEOF(int fileCharacter){
+    private boolean isEOF(int fileCharacter) {
         return fileCharacter == -1;
     }
     private void openFile(String filePath){
         File file = new File(filePath);
         try {
-            source = new FileInputStream(file);
+            source = new InputStreamReader(new FileInputStream(file), "UTF-8");
             isOpened = true;
-        }
-        catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.err.println("File " + filePath + " not found: " + e.getMessage());
             System.exit(-1);
+        } catch (UnsupportedEncodingException e) {
+            System.err.println("Unsupported encoding: " + e.getMessage());
+            System.exit(-1);
         }
+    }
+    private void setInitialCoordinates() {
+        currentRow = 1;
+        currentColumn = 1;
     }
     private void closeFile() {
         try {
