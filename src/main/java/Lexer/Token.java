@@ -1,11 +1,13 @@
+package Lexer;
+
 import Dictionary.LexemeType;
 
 import java.awt.*;
 
 public class Token {
-    private LexemeType type;
-    private String value;
-    private Point position;
+    private final LexemeType type;
+    private final String value;
+    private final Point position;
 
     public Token(LexemeType type, String value, Point position) {
         this.type = type;
