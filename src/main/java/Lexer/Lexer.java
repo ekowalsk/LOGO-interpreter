@@ -48,6 +48,29 @@ public class Lexer {
         }
         setLexemeType();
     }
+    private void getNumber() throws IllegalArgumentException {
+        if (source.getCurrentChar() == '0') {
+            lexeme.append(source.getCurrentChar());
+            source.consume();
+            if (source.getCurrentChar() == '0')
+                throw new IllegalArgumentException(ErrorMessage.BAD_NUMBER + getPosition());
+            getDigits();
+            if (source.getCurrentChar() == ',') {
+                lexeme.append(source.getCurrentChar());
+                source.consume();
+                if(!Character.isDigit(source.getCurrentChar()))
+                    throw new IllegalArgumentException(ErrorMessage.BAD_NUMBER + getPosition());
+                getDigits();
+            }
+            type = LexemeType.NUMBER;
+        }
+    }
+    private void getDigits() {
+        while (Character.isDigit(source.getCurrentChar())) {
+            lexeme.append(source.getCurrentChar());
+            source.consume();
+        }
+    }
     private void setLexemeType() {
         type = Keywords.getLexemeType(lexeme.toString());
         if (type.equals(LexemeType.UNDEFINED))
