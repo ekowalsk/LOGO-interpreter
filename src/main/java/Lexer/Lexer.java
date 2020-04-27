@@ -18,10 +18,47 @@ public class Lexer {
 
     public Lexer (Source source) {
         this.source = source;
-        //consume();
+        consume();
     }
 
-    public Token getToken() { return token; }
+    public Token getCurrentToken() { return token; }
+    public boolean consume() {
+        if (source.isOpened()) {
+            getLexeme();
+            setToken();
+            return true;
+        }
+        else
+            return false;
+    }
+    private void getLexeme(){
+        createNewLexemeBuffer();
+        skipWhiteSpacesAndComments();
+        setPosition();
+        completeLexeme();
+    }
+    private void completeLexeme() {
+        try {
+            if (Character.isLetter(source.getCurrentChar()))
+                getIdentifierOrKeyword();
+            else if (Character.isDigit(source.getCurrentChar()))
+                getNumber();
+            else if (source.getCurrentChar() == '\"')
+                getString();
+            else
+                getSpecialSymbol();
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void createNewLexemeBuffer() {
+        lexeme = new StringBuilder();
+    }
+    private void setPosition() {
+        startRow = source.getCurrentRow();
+        startColumn = source.getCurrentColumn();
+    }
     private void setToken() {
         token = new Token (type, lexeme.toString(), new Point(startRow, startColumn));
     }
@@ -83,7 +120,7 @@ public class Lexer {
         source.consume();
         type = LexemeType.STRING;
     }
-    private void getSpecialSymbols() {
+    private void getSpecialSymbol() {
         if (tryDoubleSymbol()) {
             lexeme.append(source.getCurrentChar());
             source.consume();
