@@ -50,9 +50,7 @@ public class Keywords {
         put("num", LexemeType.TYPE);
         put("czyść", LexemeType.CLEAN);
     }};
-    public static LexemeType getLexemeType(String symbol) throws IllegalArgumentException {
-        if (keywords.containsKey(symbol))
-            return keywords.get(symbol);
-        throw new IllegalArgumentException("Symbol not recognized");
+    public static LexemeType getLexemeType(String symbol) {
+        return keywords.getOrDefault(symbol, LexemeType.UNDEFINED);
     }
 }
