@@ -83,6 +83,23 @@ public class Lexer {
         source.consume();
         type = LexemeType.STRING;
     }
+    private void getSpecialSymbols() {
+        if (tryDoubleSymbol()) {
+            lexeme.append(source.getCurrentChar());
+            source.consume();
+        }
+        else
+            trySingleSymbol();
+    }
+    private boolean tryDoubleSymbol() {
+        lexeme.append(source.getCurrentChar());
+        source.consume();
+        type = Keywords.getLexemeType(lexeme.toString() + source.getCurrentChar());
+        return !type.equals(LexemeType.UNDEFINED);
+    }
+    private void trySingleSymbol() {
+        type = Keywords.getLexemeType(lexeme.toString());
+    }
     private void escapeChar() {
         source.consume();
         lexeme.append(source.getCurrentChar());
