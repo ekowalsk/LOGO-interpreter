@@ -14,6 +14,7 @@ public class Lexer {
     private LexemeType type;
     private Token token;
     private final int MAX_IDENT_LEN = 30;
+    private final int MAX_STRING_LEN = 400;
 
     public Lexer (Source source) {
         this.source = source;
@@ -42,7 +43,7 @@ public class Lexer {
     private void getIdentifierOrKeyword() throws IllegalArgumentException {
         while (Character.isLetterOrDigit(source.getCurrentChar()) || source.getCurrentChar() == '_'){
             if (lexeme.length() > MAX_IDENT_LEN)
-                throw new IllegalArgumentException(getMessage(ErrorMessage.IDENTIFIER_SIZE_EXCEEDED));
+                throw new IllegalArgumentException(ErrorMessage.IDENTIFIER_SIZE_EXCEEDED + printPosition());
             lexeme.append(source.getCurrentChar());
             source.consume();
         }
@@ -53,17 +54,39 @@ public class Lexer {
             lexeme.append(source.getCurrentChar());
             source.consume();
             if (source.getCurrentChar() == '0')
-                throw new IllegalArgumentException(ErrorMessage.BAD_NUMBER + getPosition());
+                throw new IllegalArgumentException(ErrorMessage.BAD_NUMBER + printPosition());
             getDigits();
             if (source.getCurrentChar() == ',') {
                 lexeme.append(source.getCurrentChar());
                 source.consume();
                 if(!Character.isDigit(source.getCurrentChar()))
-                    throw new IllegalArgumentException(ErrorMessage.BAD_NUMBER + getPosition());
+                    throw new IllegalArgumentException(ErrorMessage.BAD_NUMBER + printPosition());
                 getDigits();
             }
             type = LexemeType.NUMBER;
         }
+    }
+    private void getString() throws IllegalArgumentException {
+        // consume '\"' character that starts the string
+        source.consume();
+        while (source.getCurrentChar() != '\"') {
+            if (lexeme.length() > MAX_STRING_LEN)
+                throw new IllegalArgumentException(ErrorMessage.STRING_SIZE_EXCEEDED + printPosition());
+            if (source.getCurrentChar() == '\\')
+                escapeChar();
+            else {
+                lexeme.append(source.getCurrentChar());
+                source.consume();
+            }
+        }
+        // consume '\"' character that ends the string
+        source.consume();
+        type = LexemeType.STRING;
+    }
+    private void escapeChar() {
+        source.consume();
+        lexeme.append(source.getCurrentChar());
+        source.consume();
     }
     private void getDigits() {
         while (Character.isDigit(source.getCurrentChar())) {
@@ -76,10 +99,7 @@ public class Lexer {
         if (type.equals(LexemeType.UNDEFINED))
             type = Dictionary.LexemeType.IDENT;
     }
-    private Point getPosition() {
-        return new Point(startRow, startColumn);
-    }
-    private String getMessage(String message){
-        return message + "" + getPosition() + ")\n";
+    private String printPosition() {
+        return startRow + ", " + startColumn;
     }
 }
