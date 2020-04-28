@@ -21,7 +21,8 @@ public class StringSource extends Source {
         updateCoordinates();
         return true;
     }
-    public boolean isEnd() { return isEnd; }
+    @Override
+    public boolean isOpened() { return !isEnd; }
     private void getNextChar() {
         if (positionInString < source.length()) {
             currentChar = source.charAt(positionInString);

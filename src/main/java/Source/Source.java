@@ -10,6 +10,7 @@ public abstract class Source {
     public int getCurrentRow() { return currentRow; }
 
     public abstract boolean consume();
+    public abstract boolean isOpened();
     protected void updateCoordinates() {
         if (currentChar == '\n') {
             currentRow++;
