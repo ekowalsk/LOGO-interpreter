@@ -3,8 +3,10 @@ package Lexer;
 import Dictionary.ErrorMessage;
 import Dictionary.Keywords;
 import Dictionary.LexemeType;
+import Exception.*;
 import Source.Source;
 import java.awt.Point;
+import java.io.EOFException;
 
 public class Lexer {
     private Source source;
@@ -15,6 +17,7 @@ public class Lexer {
     private Token token;
     private final int MAX_IDENT_LEN = 30;
     private final int MAX_STRING_LEN = 400;
+    private final char ETX = (char) 3;
 
     public Lexer (Source source) {
         this.source = source;
@@ -32,10 +35,14 @@ public class Lexer {
             return false;
     }
     private void getLexeme(){
-        createNewLexemeBuffer();
-        skipWhiteSpacesAndComments();
-        setPosition();
-        completeLexeme();
+        try {
+            createNewLexemeBuffer();
+            skipWhiteSpacesAndComments();
+            setPosition();
+            completeLexeme();
+        } catch (EndOfTokens e) {
+            setETXToken();
+        }
     }
     private void completeLexeme() {
         try {
@@ -62,23 +69,23 @@ public class Lexer {
     private void setToken() {
         token = new Token (type, lexeme.toString(), new Point(startRow, startColumn));
     }
-    private void skipWhiteSpacesAndComments() {
-        while (Character.isWhitespace(source.getCurrentChar()) || source.getCurrentChar() == ';'){
+    private void skipWhiteSpacesAndComments() throws EndOfTokens {
+        while (Character.isWhitespace(source.getCurrentChar()) || source.getCurrentChar() == ';') {
             if (source.getCurrentChar() == ';')
                 skipComments();
             else
                 source.consume();
         }
+        if (source.getCurrentChar() == ETX)
+            throw new EndOfTokens();
     }
     private void skipComments() {
-        if (source.getCurrentChar() == ';') {
-            while (source.getCurrentChar() != '\n')
-                source.consume();
+        while (source.getCurrentChar() != '\n' || source.getCurrentChar() != ETX)
             source.consume();
-        }
+        source.consume();
     }
     private void getIdentifierOrKeyword() throws IllegalArgumentException {
-        while (Character.isLetterOrDigit(source.getCurrentChar()) || source.getCurrentChar() == '_'){
+        while (Character.isLetterOrDigit(source.getCurrentChar()) || source.getCurrentChar() == '_') {
             if (lexeme.length() > MAX_IDENT_LEN)
                 throw new IllegalArgumentException(ErrorMessage.IDENTIFIER_SIZE_EXCEEDED + printPosition());
             lexeme.append(source.getCurrentChar());
@@ -104,9 +111,8 @@ public class Lexer {
         }
     }
     private void getString() throws IllegalArgumentException {
-        // consume '\"' character that starts the string
-        source.consume();
-        while (source.getCurrentChar() != '\"') {
+        consumeCharacter('\"');
+        while (source.getCurrentChar() != '\"' && source.getCurrentChar() != ETX) {
             if (lexeme.length() > MAX_STRING_LEN)
                 throw new IllegalArgumentException(ErrorMessage.STRING_SIZE_EXCEEDED + printPosition());
             if (source.getCurrentChar() == '\\')
@@ -116,8 +122,7 @@ public class Lexer {
                 source.consume();
             }
         }
-        // consume '\"' character that ends the string
-        source.consume();
+        consumeCharacter('\"');
         type = LexemeType.STRING;
     }
     private void getSpecialSymbol() {
@@ -138,7 +143,7 @@ public class Lexer {
         type = Keywords.getLexemeType(lexeme.toString());
     }
     private void escapeChar() {
-        source.consume();
+        consumeCharacter('\\');
         lexeme.append(source.getCurrentChar());
         source.consume();
     }
@@ -148,6 +153,12 @@ public class Lexer {
             source.consume();
         }
     }
+    private void consumeFromSource() throws EOFException {
+        if (source.isOpened())
+            source.consume();
+        else
+            throw new EOFException();
+    }
     private void setLexemeType() {
         type = Keywords.getLexemeType(lexeme.toString());
         if (type.equals(LexemeType.UNDEFINED))
@@ -155,5 +166,15 @@ public class Lexer {
     }
     private String printPosition() {
         return startRow + ", " + startColumn;
+    }
+    private void consumeCharacter(char character) {
+        if (source.getCurrentChar() == character)
+            source.consume();
+        else
+            throw new IllegalArgumentException(character + " not expected here");
+    }
+    private void setETXToken () {
+        lexeme.append(ETX);
+        type = LexemeType.ETX;
     }
 }
