@@ -7,19 +7,18 @@ public class StringSource extends Source {
 
     public StringSource (String source) {
         currentRow = 1;
-        currentColumn = 0;
-        this.source = source;
+        currentColumn = 1;
+        this.source = source + (char) 3;
         isEnd = false;
         positionInString = 0;
         consume();
     }
     @Override
-    public boolean consume() {
-        if (isEnd)
-            return false;
-        getNextChar();
-        updateCoordinates();
-        return true;
+    public void consume() {
+        if (!isEnd) {
+            getNextChar();
+            updateCoordinates();
+        }
     }
     @Override
     public boolean isOpened() { return !isEnd; }
