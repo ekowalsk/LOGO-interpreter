@@ -1,4 +1,8 @@
 package Exception;
 
-public class EndOfToken {
+public class EndOfTokens extends Exception {
+    public EndOfTokens (){
+        super();
+    }
 }
+
