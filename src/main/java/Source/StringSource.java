@@ -8,20 +8,20 @@ public class StringSource extends Source {
     public StringSource (String source) {
         currentRow = 1;
         currentColumn = 0;
-        this.source = source;
+        this.source = source + (char) 3;
         isEnd = false;
         positionInString = 0;
         consume();
     }
     @Override
-    public boolean consume() {
-        if (isEnd)
-            return false;
-        getNextChar();
-        updateCoordinates();
-        return true;
+    public void consume() {
+        if (!isEnd) {
+            getNextChar();
+            updateCoordinates();
+        }
     }
-    public boolean isEnd() { return isEnd; }
+    @Override
+    public boolean isOpened() { return !isEnd; }
     private void getNextChar() {
         if (positionInString < source.length()) {
             currentChar = source.charAt(positionInString);
