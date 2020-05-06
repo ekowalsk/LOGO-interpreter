@@ -42,12 +42,12 @@ public class testStringSource {
     public void testWhenLastCharIsConsumedSourceIsClosed() {
         for (int i = 0; i < 4; i++)
             source.consume();
-        Assertions.assertTrue(source.isEnd());
+        Assertions.assertFalse(source.isOpened());
     }
     @Test
     public void testWhenEndOfStringOccuredCurrentCharIsTheLastValidChar() {
         for (int i = 0; i < 4; i++)
             source.consume();
-        Assertions.assertEquals('\n', source.getCurrentChar());
+        Assertions.assertEquals((char) 3, source.getCurrentChar());
     }
 }

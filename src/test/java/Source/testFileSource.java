@@ -51,9 +51,9 @@ public class testFileSource {
         Assertions.assertFalse(source.isOpened());
     }
     @Test
-    public void testWhenEOFOccuredCurrentCharIsTheLastValidChar() {
+    public void testWhenEOFOccuresCurrentCharIsEOF() {
         for (int i = 0; i < 4; i++)
             source.consume();
-        Assertions.assertEquals('\n', source.getCurrentChar());
+        Assertions.assertEquals((char) 3, source.getCurrentChar());
     }
 }
