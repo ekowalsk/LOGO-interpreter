@@ -13,12 +13,11 @@ public class FileSource extends Source {
     }
 
     @Override
-    public boolean consume() {
-        if (!isOpened)
-            return false;
-        readCharacter();
-        updateCoordinates();
-        return true;
+    public void consume() {
+        if (isOpened) {
+            readCharacter();
+            updateCoordinates();
+        }
     }
     public boolean isOpened() { return isOpened; }
 
@@ -27,8 +26,10 @@ public class FileSource extends Source {
             int character = source.read();
             if (!isEOF(character))
                 currentChar = (char) character;
-            else
+            else {
+                currentChar = (char) 3;
                 closeFile();
+            }
         }
         catch (IOException e) {
             System.err.println(e.getMessage());
