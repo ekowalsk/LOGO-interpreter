@@ -38,16 +38,11 @@ public class testStringSource {
         source.consume();
         Assertions.assertEquals(new Point(2,0), new Point (source.getCurrentRow(), source.getCurrentColumn()));
     }
+
     @Test
-    public void testWhenLastCharIsConsumedSourceIsClosed() {
+    public void testWhenEndOfStringOccuredCurrentCharIsETX() {
         for (int i = 0; i < 4; i++)
             source.consume();
-        Assertions.assertFalse(source.isOpened());
-    }
-    @Test
-    public void testWhenEndOfStringOccuredCurrentCharIsTheLastValidChar() {
-        for (int i = 0; i < 4; i++)
-            source.consume();
-        Assertions.assertEquals((char) 3, source.getCurrentChar());
+        Assertions.assertEquals(Source.ETX, source.getCurrentChar());
     }
 }

@@ -4,8 +4,6 @@ import java.io.*;
 
 public class FileSource extends Source {
     private InputStreamReader source;
-    private boolean isOpened;
-
     public FileSource(String filePath) {
         openFile(filePath);
         readCharacter();
@@ -14,12 +12,11 @@ public class FileSource extends Source {
 
     @Override
     public void consume() {
-        if (isOpened) {
+        if (currentChar != ETX) {
             readCharacter();
             updateCoordinates();
         }
     }
-    public boolean isOpened() { return isOpened; }
 
     private void readCharacter() {
         try {
@@ -43,7 +40,6 @@ public class FileSource extends Source {
         File file = new File(filePath);
         try {
             source = new InputStreamReader(new FileInputStream(file), "UTF-8");
-            isOpened = true;
         } catch (FileNotFoundException e) {
             System.err.println("File " + filePath + " not found: " + e.getMessage());
             System.exit(-1);
@@ -59,7 +55,6 @@ public class FileSource extends Source {
     private void closeFile() {
         try {
             source.close();
-            isOpened = false;
         }
         catch (IOException e) {
             System.out.println(e.getMessage());

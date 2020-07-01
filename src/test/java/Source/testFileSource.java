@@ -52,13 +52,6 @@ public class testFileSource {
     }
     // test 7
     @Test
-    public void testWhenLastCharIsConsumedSourceIsClosed() {
-        for (int i = 0; i < 4; i++)
-            source.consume();
-        Assertions.assertFalse(source.isOpened());
-    }
-    // test 8
-    @Test
     public void testWhenEOFOccuresCurrentCharIsETX() {
         for (int i = 0; i < 4; i++)
             source.consume();

@@ -3,10 +3,8 @@ package Lexer;
 import Dictionary.ErrorMessage;
 import Dictionary.Keywords;
 import Dictionary.LexemeType;
-import Exception.*;
 import Source.Source;
 import java.awt.Point;
-import java.io.EOFException;
 
 public class Lexer {
     private final Source source;
@@ -22,29 +20,25 @@ public class Lexer {
 
     public Lexer (Source source) {
         this.source = source;
-        hasTokens = false;
+        hasTokens = true;
         consume();
     }
 
     public Token getCurrentToken() { return token; }
 
     public void consume() {
-        if (source.isOpened()) {
+        if (source.getCurrentChar() != Source.ETX) {
             getLexeme();
             setToken();
         }
         else
             hasTokens = false;
     }
-    private void getLexeme(){
-        try {
-            createNewLexemeBuffer();
-            skipWhiteSpacesAndComments();
-            setPosition();
-            completeLexeme();
-        } catch (EndOfTokens e) {
-            setETXToken();
-        }
+    private void getLexeme() {
+        createNewLexemeBuffer();
+        skipWhiteSpacesAndComments();
+        setPosition();
+        completeLexeme();
     }
     private void completeLexeme() {
         try {
@@ -71,7 +65,7 @@ public class Lexer {
     private void setToken() {
         token = new Token (type, lexeme.toString(), new Point(startRow, startColumn));
     }
-    private void skipWhiteSpacesAndComments() throws EndOfTokens {
+    private void skipWhiteSpacesAndComments() {
         while (Character.isWhitespace(source.getCurrentChar()) || source.getCurrentChar() == ';') {
             if (source.getCurrentChar() == ';')
                 skipComments();
@@ -79,7 +73,7 @@ public class Lexer {
                 source.consume();
         }
         if (source.getCurrentChar() == ETX)
-            throw new EndOfTokens();
+            setETXToken();
     }
     private void skipComments() {
         while (source.getCurrentChar() != '\n' || source.getCurrentChar() != ETX)
@@ -154,12 +148,6 @@ public class Lexer {
             lexeme.append(source.getCurrentChar());
             source.consume();
         }
-    }
-    private void consumeFromSource() throws EOFException {
-        if (source.isOpened())
-            source.consume();
-        else
-            throw new EOFException();
     }
     private void setLexemeType() {
         type = Keywords.getLexemeType(lexeme.toString());
