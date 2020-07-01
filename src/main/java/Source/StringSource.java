@@ -1,14 +1,14 @@
 package Source;
 
 public class StringSource extends Source {
-    private String source;
+    private final String source;
     private boolean isEnd;
     private int positionInString;
 
     public StringSource (String source) {
         currentRow = 1;
         currentColumn = 1;
-        this.source = source + (char) 3;
+        this.source = source + ETX;
         isEnd = false;
         positionInString = 0;
         consume();

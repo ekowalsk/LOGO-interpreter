@@ -4,8 +4,11 @@ public abstract class Source {
     protected char currentChar;
     protected int currentRow;
     protected int currentColumn;
+    public final char ETX = (char) 3;
 
-    public char getCurrentChar() { return currentChar; }
+    public char getCurrentChar() {
+        return currentChar;
+    }
     public int getCurrentColumn() { return currentColumn; }
     public int getCurrentRow() { return currentRow; }
 
