@@ -4,7 +4,7 @@ public abstract class Source {
     protected char currentChar;
     protected int currentRow;
     protected int currentColumn;
-    public final char ETX = (char) 3;
+    public static final char ETX = (char) 3;
 
     public char getCurrentChar() {
         return currentChar;
