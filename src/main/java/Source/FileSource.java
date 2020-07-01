@@ -27,7 +27,7 @@ public class FileSource extends Source {
             if (!isEOF(character))
                 currentChar = (char) character;
             else {
-                currentChar = (char) 3;
+                currentChar = ETX;
                 closeFile();
             }
         }
