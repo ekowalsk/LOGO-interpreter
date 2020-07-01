@@ -9,7 +9,7 @@ import java.awt.Point;
 import java.io.EOFException;
 
 public class Lexer {
-    private Source source;
+    private final Source source;
     private StringBuilder lexeme;
     private int startRow;
     private int startColumn;
@@ -18,21 +18,23 @@ public class Lexer {
     private final int MAX_IDENT_LEN = 30;
     private final int MAX_STRING_LEN = 400;
     private final char ETX = (char) 3;
+    private boolean hasTokens;
 
     public Lexer (Source source) {
         this.source = source;
+        hasTokens = false;
         consume();
     }
 
     public Token getCurrentToken() { return token; }
-    public boolean consume() {
+
+    public void consume() {
         if (source.isOpened()) {
             getLexeme();
             setToken();
-            return true;
         }
         else
-            return false;
+            hasTokens = false;
     }
     private void getLexeme(){
         try {
