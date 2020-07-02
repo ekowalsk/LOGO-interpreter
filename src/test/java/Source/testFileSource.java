@@ -14,45 +14,38 @@ public class testFileSource {
     private void openSource() {
         source = new FileSource(filePath);
     }
-    // test 1
     @Test
-    public void testWhenSourceOpenedCurrentCharIsŻ() {
+    public void test1_FirstCharIsŻ() {
         Assertions.assertEquals('ż', source.getCurrentChar());
     }
-    // test 2
     @Test
-    public void testWhenSourceOpenedCurrentCoordinatesAre11() {
+    public void test2_InitialCoordinatesAre1_1() {
         Assertions.assertEquals(new Point(1,1), new Point (source.getCurrentRow(), source.getCurrentColumn()));
     }
-    // test 3
     @Test
-    public void testWhenConsumeFirstCharCurrentCharIsÓ() {
+    public void test3_SecondCharIsÓ() {
         source.consume();
         Assertions.assertEquals('ó', source.getCurrentChar());
     }
-    // test 4
     @Test
-    public void testWhenConsumeFirstCharCurrentPositionIs12() {
+    public void test4_AfterConsumingFirstCharCoordinatesChangeTo1_2() {
         source.consume();
         Assertions.assertEquals(new Point(1,2), new Point (source.getCurrentRow(), source.getCurrentColumn()));
     }
-    // test 5
     @Test
-    public void testWhenConsumeSecondCharCurrentCharIsNewLine() {
+    public void test5_ThirdCharIsNewLine() {
         source.consume();
         source.consume();
         Assertions.assertEquals('\n', source.getCurrentChar());
     }
-    // test 6
     @Test
-    public void testWhenConsumeSecondCharCurrentPositionIs20() {
+    public void test6_PositionOfThirdCharIs2_0() {
         source.consume();
         source.consume();
         Assertions.assertEquals(new Point(2,0), new Point (source.getCurrentRow(), source.getCurrentColumn()));
     }
-    // test 7
     @Test
-    public void testWhenEOFOccuresCurrentCharIsETX() {
+    public void test7_WhenEOFOccuresCurrentCharIsETX() {
         for (int i = 0; i < 4; i++)
             source.consume();
         Assertions.assertEquals(Source.ETX, source.getCurrentChar());
