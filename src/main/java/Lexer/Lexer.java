@@ -16,11 +16,9 @@ public class Lexer {
     private final int MAX_IDENT_LEN = 30;
     private final int MAX_STRING_LEN = 400;
     private final char ETX = (char) 3;
-    private boolean hasTokens;
 
     public Lexer (Source source) {
         this.source = source;
-        hasTokens = true;
         consume();
     }
 
@@ -32,7 +30,7 @@ public class Lexer {
             setToken();
         }
         else
-            hasTokens = false;
+            setETXToken();
     }
     private void getLexeme() {
         createNewLexemeBuffer();
@@ -164,7 +162,9 @@ public class Lexer {
             throw new IllegalArgumentException(character + " not expected here");
     }
     private void setETXToken () {
+        createNewLexemeBuffer();
         lexeme.append(ETX);
         type = LexemeType.ETX;
+        setToken();
     }
 }
