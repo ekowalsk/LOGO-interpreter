@@ -38,5 +38,26 @@ public class testLexer {
         Assertions.assertEquals("99", token.getValue(), "Value of second lexeme should be 99");
         Assertions.assertEquals(new Point(1, 1), token.getPosition(), "Position of first token should be (1,1)");
     }
-
+    @Test
+    public void test4_RecognizeNumberAsFirstToken() {
+        initLexer("99,55");
+        Token token = lexer.getCurrentToken();
+        Assertions.assertEquals(LexemeType.NUMBER, token.getType(), "Type of second lexeme should be NUMBER");
+        Assertions.assertEquals("99,55", token.getValue(), "Value of second lexeme should be 99");
+        Assertions.assertEquals(new Point(1, 1), token.getPosition(), "Position of first token should be (1,1)");
+    }
+    @Test
+    public void test5_RecognizeDoubleSpecialCharacter() {
+        initLexer(":=");
+        Token token = lexer.getCurrentToken();
+        Assertions.assertEquals(LexemeType.ASSIGNOP, token.getType(), "Type of second lexeme should be ASSIGNOP");
+        Assertions.assertEquals(":=", token.getValue(), "Value of second lexeme should be :=");
+    }
+    @Test
+    public void test6_RecognizeSingleSpecialCharacter() {
+        initLexer("*");
+        Token token = lexer.getCurrentToken();
+        Assertions.assertEquals(LexemeType.MUL, token.getType(), "Type of second lexeme should be MUL");
+        Assertions.assertEquals("*", token.getValue(), "Value of second lexeme should be *");
+    }
 }
