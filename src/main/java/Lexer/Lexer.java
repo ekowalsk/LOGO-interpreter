@@ -29,7 +29,8 @@ public class Lexer {
             setToken();
         }
         else
-            setETXToken();
+            if (token.getType() != LexemeType.ETX)
+                setETXToken();
     }
     private void getLexeme() {
         createNewLexemeBuffer();
