@@ -15,7 +15,6 @@ public class Lexer {
     private Token token;
     private final int MAX_IDENT_LEN = 30;
     private final int MAX_STRING_LEN = 400;
-    private final char ETX = (char) 3;
 
     public Lexer (Source source) {
         this.source = source;
@@ -25,7 +24,7 @@ public class Lexer {
     public Token getCurrentToken() { return token; }
 
     public void consume() {
-        if (source.getCurrentChar() != Source.ETX) {
+        if (!source.empty()) {
             getLexeme();
             setToken();
         }
@@ -70,11 +69,11 @@ public class Lexer {
             else
                 source.consume();
         }
-        if (source.getCurrentChar() == ETX)
+        if (source.empty())
             setETXToken();
     }
     private void skipComments() {
-        while (source.getCurrentChar() != '\n' || source.getCurrentChar() != ETX)
+        while (source.getCurrentChar() != '\n' && !source.empty())
             source.consume();
         source.consume();
     }
@@ -106,7 +105,7 @@ public class Lexer {
     }
     private void getString() throws IllegalArgumentException {
         consumeCharacter('\"');
-        while (source.getCurrentChar() != '\"' && source.getCurrentChar() != ETX) {
+        while (source.getCurrentChar() != '\"' && !source.empty()) {
             if (lexeme.length() > MAX_STRING_LEN)
                 throw new IllegalArgumentException(ErrorMessage.STRING_SIZE_EXCEEDED + printPosition());
             if (source.getCurrentChar() == '\\')
@@ -163,7 +162,6 @@ public class Lexer {
     }
     private void setETXToken () {
         createNewLexemeBuffer();
-        lexeme.append(ETX);
         type = LexemeType.ETX;
         setToken();
     }

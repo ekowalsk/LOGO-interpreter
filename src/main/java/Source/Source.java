@@ -13,6 +13,7 @@ public abstract class Source {
     public int getCurrentRow() { return currentRow; }
 
     public abstract void consume();
+    public boolean empty() { return currentChar == ETX; }
     protected void updateCoordinates() {
         if (currentChar == '\n') {
             currentRow++;
