@@ -95,16 +95,16 @@ public class Lexer {
             source.consume();
             if (source.getCurrentChar() == '0')
                 throw new IllegalArgumentException(ErrorMessage.BAD_NUMBER + printPosition());
-            getDigits();
-            if (source.getCurrentChar() == ',') {
-                lexeme.append(source.getCurrentChar());
-                source.consume();
-                if(!Character.isDigit(source.getCurrentChar()))
-                    throw new IllegalArgumentException(ErrorMessage.BAD_NUMBER + printPosition());
-                getDigits();
-            }
-            type = LexemeType.NUMBER;
         }
+        getDigits();
+        if (source.getCurrentChar() == ',') {
+            lexeme.append(source.getCurrentChar());
+            source.consume();
+            if(!Character.isDigit(source.getCurrentChar()))
+                throw new IllegalArgumentException(ErrorMessage.BAD_NUMBER + printPosition());
+            getDigits();
+        }
+        type = LexemeType.NUMBER;
     }
     private void getString() throws IllegalArgumentException {
         consumeCharacter('\"');
