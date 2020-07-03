@@ -7,4 +7,6 @@ public class ErrorMessage {
     public static final String IDENTIFIER_SIZE_EXCEEDED = " maximum identifier size exceed: ";
     public static final String BAD_NUMBER = " bad number: ";
     public static final String STRING_SIZE_EXCEEDED = " maximum string size exceeded: ";
+    public static final String RBRACKET_EXPECTED = " ')' expected: ";
+    public static final String FACTOR_EXPECTED = " number, identifier or left bracket expected: ";
 }
