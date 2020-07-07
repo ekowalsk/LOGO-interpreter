@@ -2,6 +2,7 @@ package Nodes.ColorCommands;
 
 import Nodes.Color;
 import Nodes.Node;
+import Nodes.Output;
 import Visitors.Visitor;
 
 public abstract class ColorCommand implements Node {

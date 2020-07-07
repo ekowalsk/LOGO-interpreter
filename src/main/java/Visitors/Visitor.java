@@ -1,6 +1,7 @@
 package Visitors;
 
 import Nodes.*;
+import Nodes.ChildrenNodes.ChildrenNode;
 import Nodes.ColorCommands.ColorCommand;
 import Nodes.ConditionalCommands.ConditionalCommand;
 import Nodes.ExpressionCommands.ExpressionCommand;
@@ -8,7 +9,6 @@ import Nodes.SimpleCommands.SimpleCommand;
 import Nodes.Number;
 
 public interface Visitor {
-    void visit(Program program);
     void visit(SimpleCommand simpleCommand);
     void visit(ExpressionCommand expressionCommand);
     void visit(ConditionalCommand conditionalCommand);
@@ -20,4 +20,10 @@ public interface Visitor {
     void visit(Assignment assignment);
     void visit(UnaryOperation unaryOperation);
     void visit(Number number);
+    void visit(SetPosition setPosition);
+    void visit(ChildrenNode childrenNode);
+    void visit(IfElse ifElse);
+    void visit(ProcedureCall procedureCall);
+    void visit(ProcedureDeclaration procedureDeclaration);
+    void visit(Parameter param);
 }
