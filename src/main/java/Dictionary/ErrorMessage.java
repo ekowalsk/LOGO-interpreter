@@ -13,4 +13,5 @@ public class ErrorMessage {
     public static final String SQUAREL_EXPECTED = " '[' expected: ";
     public static final String SQUARER_EXPECTED = " ']' expected: ";
     public static final String END_EXPECTED = " 'już' expected: ";
+    public static final String INSTRUCTION_EXCECTED = " instruction expected ";
 }

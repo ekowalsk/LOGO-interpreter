@@ -58,8 +58,10 @@ public class Parser {
                 return ifelse();
             case BEGIN:
                 return procedure();
+            case IDENT:
+                return procedureCall();
             default:
-                return null;
+                throw new Exception(ErrorMessage.INSTRUCTION_EXCECTED + lexer.getCurrentToken().getPosition());
         }
     }
     private LexemeType currentTokenType() {
@@ -149,6 +151,23 @@ public class Parser {
             readParameters(parameters);
         consumeToken(LexemeType.RBRACKET, ErrorMessage.RBRACKET_EXPECTED);
         return new ProcedureDeclaration(identifier.getValue(), procedureBlock(), parameters);
+    }
+    private ProcedureCall procedureCall() throws Exception {
+        String name = lexer.getCurrentToken().getValue();
+        lexer.consume();
+        LinkedList<Node> arguments = new LinkedList<>();
+        readArguments(arguments);
+        return new ProcedureCall(name, arguments);
+    }
+    private void readArguments(LinkedList<Node> arguments) throws Exception {
+        consumeToken(LexemeType.LBRACKET, ErrorMessage.LBRACKET_EXPECTED);
+        if (currentTokenType() == LexemeType.RBRACKET) {
+            lexer.consume();
+            return;
+        }
+        while (currentTokenType() != LexemeType.RBRACKET)
+            arguments.add(expression());
+        consumeToken(LexemeType.RBRACKET, ErrorMessage.RBRACKET_EXPECTED);
     }
     private void readParameters(LinkedList<Parameter> parameters) throws Exception {
         Token identifier = lexer.getCurrentToken();
