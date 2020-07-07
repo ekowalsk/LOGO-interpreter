@@ -4,6 +4,7 @@ import Dictionary.LexemeType;
 import Lexer.*;
 import Nodes.*;
 import Nodes.ChildrenNodes.Compound;
+import Nodes.ChildrenNodes.Program;
 import Nodes.ColorCommands.SetPaintColor;
 import Nodes.ColorCommands.SetPenColor;
 import Nodes.ConditionalCommands.Repeat;
@@ -21,6 +22,12 @@ public class Parser {
     private final Lexer lexer;
     public Parser (Lexer lexer) {
         this.lexer = lexer;
+    }
+    public Node program() throws Exception {
+        Program program = new Program();
+        while (currentTokenType() != LexemeType.ETX)
+            program.add(statement());
+        return program;
     }
     private Node statement() throws Exception {
         switch (currentTokenType()) {
