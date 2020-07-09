@@ -11,7 +11,7 @@ public abstract class ConditionalCommand implements Node {
         this.block = block;
     }
     @Override
-    public void accept(Visitor v) {
+    public void accept(Visitor v) throws Exception {
         v.visit(this);
     }
     public Node getBlock() {

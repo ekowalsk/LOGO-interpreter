@@ -3,6 +3,7 @@ package Nodes;
 import Visitors.Visitor;
 
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 public class ProcedureDeclaration implements Node {
     private String name;
@@ -13,10 +14,16 @@ public class ProcedureDeclaration implements Node {
         this.children = (children == null) ? new LinkedList<>() : children;
         this.parameters = (parameters == null) ? new LinkedList<>() : parameters;
     }
-    public void accept(Visitor v) {
+    public void accept(Visitor v) throws Exception {
         v.visit(this);
     }
     public String getName() {
         return name;
+    }
+    public ListIterator<Parameter> getParameters() {
+       return parameters.listIterator(0);
+    }
+    public ListIterator<Node> getChildren() {
+        return children.listIterator(0);
     }
 }

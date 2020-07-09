@@ -12,7 +12,13 @@ public class BinaryOperation extends Output<Float> implements Node {
         this.operator = operator;
         this.rightExpression = rightExpression;
     }
-    public void accept(Visitor v) {
+    public void accept(Visitor v) throws Exception {
         v.visit(this);
+    }
+    public Node getLeftExpression() {
+        return leftExpression;
+    }
+    public Node getRightExpression() {
+        return rightExpression;
     }
 }

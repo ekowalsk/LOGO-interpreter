@@ -12,4 +12,10 @@ public class SetPosition implements Node {
     public void accept(Visitor v) {
         v.visit(this);
     }
+    public Node getExpressionX() {
+        return expressionX;
+    }
+    public Node getExpressionY() {
+        return expressionY;
+    }
 }

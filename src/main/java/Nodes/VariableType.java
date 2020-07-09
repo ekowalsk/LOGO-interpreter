@@ -10,4 +10,7 @@ public class VariableType implements Node {
     public void accept(Visitor v) {
         v.visit(this);
     }
+    public String getName() {
+        return name;
+    }
 }

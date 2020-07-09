@@ -30,6 +30,12 @@ public class SymbolTableScope {
     public boolean contains(String name) {
         return symbols.containsKey(name);
     }
+    public int getScopeLevel() {
+        return scopeLevel;
+    }
+    public SymbolTableScope getGlobalScope() {
+        return globalScope;
+    }
     private void init() {
         define(new BuiltinTypeSymbol("num"));
     }

@@ -11,7 +11,16 @@ public class IfElse implements Node {
         this.trueBlock = trueBlock;
         this.falseBlock = falseBlock;
     }
-    public void accept(Visitor v) {
+    public void accept(Visitor v) throws Exception {
         v.visit(this);
+    }
+    public Node getCondition() {
+        return condition;
+    }
+    public Node getTrueBlock() {
+        return trueBlock;
+    }
+    public Node getFalseBlock() {
+        return falseBlock;
     }
 }

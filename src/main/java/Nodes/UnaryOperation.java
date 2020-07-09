@@ -9,7 +9,10 @@ public class UnaryOperation implements Node {
         this.operator = operator;
         this.expression = expression;
     }
-    public void accept (Visitor v) {
+    public void accept (Visitor v) throws Exception {
         v.visit(this);
+    }
+    public Node getExpression() {
+        return expression;
     }
 }

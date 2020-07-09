@@ -9,21 +9,22 @@ import Nodes.SimpleCommands.SimpleCommand;
 import Nodes.Number;
 
 public interface Visitor {
-    void visit(SimpleCommand simpleCommand);
-    void visit(ExpressionCommand expressionCommand);
-    void visit(ConditionalCommand conditionalCommand);
+    void visit(SimpleCommand simpleCommand) throws Exception;
+    void visit(ExpressionCommand expressionCommand) throws Exception;
+    void visit(ConditionalCommand conditionalCommand) throws Exception;
     void visit(Color color);
     void visit(ColorCommand colorCommand);
-    void visit(BinaryOperation binaryOperation);
-    void visit(Variable variable);
+    void visit(BinaryOperation binaryOperation) throws Exception;
+    void visit(Variable variable) throws Exception;
     void visit(VariableType variableType);
-    void visit(Assignment assignment);
-    void visit(UnaryOperation unaryOperation);
+    void visit(Assignment assignment) throws Exception;
+    void visit(UnaryOperation unaryOperation) throws Exception;
     void visit(Number number);
-    void visit(SetPosition setPosition);
-    void visit(ChildrenNode childrenNode);
-    void visit(IfElse ifElse);
+    void visit(SetPosition setPosition) throws Exception;
+    void visit(ChildrenNode childrenNode)throws Exception;
+    void visit(IfElse ifElse) throws Exception;
     void visit(ProcedureCall procedureCall);
-    void visit(ProcedureDeclaration procedureDeclaration);
+    void visit(ProcedureDeclaration procedureDeclaration) throws Exception;
     void visit(Parameter param);
+    void visit(Strings strings);
 }

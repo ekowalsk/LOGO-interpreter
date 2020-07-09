@@ -11,7 +11,7 @@ public class ExpressionCommand extends Output<Float> implements Node {
         this.expression = expression;
     }
     @Override
-    public void accept(Visitor v) {
+    public void accept(Visitor v) throws Exception {
         v.visit(this);
     }
     public Node getExpression() {

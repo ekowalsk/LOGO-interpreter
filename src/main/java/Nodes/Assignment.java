@@ -11,7 +11,16 @@ public class Assignment implements Node {
         this.type = type;
         this.expression = expression;
     }
-    public void accept(Visitor v) {
+    public void accept(Visitor v) throws Exception {
         v.visit(this);
+    }
+    public Variable getVariable() {
+        return variable;
+    }
+    public VariableType getType() {
+        return type;
+    }
+    public Node getExpression() {
+        return expression;
     }
 }

@@ -12,4 +12,10 @@ public class Parameter implements Node {
     public void accept(Visitor v) {
         v.visit(this);
     }
+    public Variable getVar() {
+        return var;
+    }
+    public VariableType getType() {
+        return type;
+    }
 }

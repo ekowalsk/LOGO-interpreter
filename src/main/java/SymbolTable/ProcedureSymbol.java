@@ -8,4 +8,7 @@ public class ProcedureSymbol extends Symbol {
         super(name);
         this.parameters = (parameters == null) ? new LinkedList<>() : parameters;
     }
+    public void addParameter(VariableSymbol variableSymbol) {
+        this.parameters.add(variableSymbol);
+    }
 }
