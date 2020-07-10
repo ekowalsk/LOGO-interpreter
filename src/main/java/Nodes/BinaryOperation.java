@@ -2,12 +2,12 @@ package Nodes;
 
 import Visitors.Visitor;
 
-public class BinaryOperation extends Output<Float> implements Node {
-    private Node leftExpression;
-    private Node rightExpression;
-    private String operator;
+public class BinaryOperation implements Node {
+    private final Node leftExpression;
+    private final Node rightExpression;
+    private final String operator;
+    private Object output;
     public BinaryOperation (Node leftExpression, String operator, Node rightExpression) {
-        super((float) 0.0);
         this.leftExpression = leftExpression;
         this.operator = operator;
         this.rightExpression = rightExpression;
@@ -21,4 +21,9 @@ public class BinaryOperation extends Output<Float> implements Node {
     public Node getRightExpression() {
         return rightExpression;
     }
+    public String getOperator() {
+        return operator;
+    }
+    public Object getOutput() { return output; }
+    public void setOutput(Object output) { this.output = output; }
 }

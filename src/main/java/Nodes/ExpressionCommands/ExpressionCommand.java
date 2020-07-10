@@ -1,20 +1,20 @@
 package Nodes.ExpressionCommands;
 
 import Nodes.Node;
-import Nodes.Output;
 import Visitors.Visitor;
 
-public class ExpressionCommand extends Output<Float> implements Node {
+public class ExpressionCommand implements Node {
     protected Node expression;
+    private Object output;
     public ExpressionCommand(Node expression) {
-        super((float) 0.0);
         this.expression = expression;
     }
-    @Override
     public void accept(Visitor v) throws Exception {
         v.visit(this);
     }
     public Node getExpression() {
         return expression;
     }
+    public Object getOutput() { return output; }
+    public void setOutput(Object output) { this.output = output; }
 }

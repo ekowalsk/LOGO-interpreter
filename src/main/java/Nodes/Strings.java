@@ -10,7 +10,7 @@ public class Strings implements Node {
     public void accept(Visitor v) {
         v.visit(this);
     }
-    public String getValue() {
-        return value;
-    }
+    public String getValue() { return value; }
+    public Object getOutput() { return null; }
+    public void setOutput(Object output) {}
 }

@@ -11,10 +11,7 @@ import Nodes.ConditionalCommands.Repeat;
 import Nodes.ConditionalCommands.While;
 import Nodes.ExpressionCommands.*;
 import Nodes.Number;
-import Nodes.SimpleCommands.Clean;
-import Nodes.SimpleCommands.Hide;
-import Nodes.SimpleCommands.Show;
-import Nodes.SimpleCommands.Up;
+import Nodes.SimpleCommands.*;
 
 import java.util.LinkedList;
 

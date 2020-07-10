@@ -14,8 +14,9 @@ public class ErrorMessage {
     public static final String SQUARER_EXPECTED = " ']' expected: ";
     public static final String END_EXPECTED = " 'już' expected: ";
     public static final String INSTRUCTION_EXCECTED = " instruction expected ";
-    public static final String SYMBOL_NOT_FOUND = " symbol bot found: ";
+    public static final String SYMBOL_NOT_FOUND = " symbol not found: ";
     public static final String MAX_NEST_LEXEL_EXCEED = " maximal nest level exceeded ";
     public static final String PROCEDURE_NOT_FOUND = " procedure not found: ";
     public static final String VAR_NOT_FOUND = " variable not found: ";
+    public static final String WRONG_OPERATOR = " wrong operator: ";
 }

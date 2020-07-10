@@ -95,7 +95,7 @@ public class Lexer {
                 throw new IllegalArgumentException(ErrorMessage.BAD_NUMBER + printPosition());
         }
         getDigits();
-        if (source.getCurrentChar() == ',') {
+        if (source.getCurrentChar() == '.') {
             lexeme.append(source.getCurrentChar());
             source.consume();
             if(!Character.isDigit(source.getCurrentChar()))

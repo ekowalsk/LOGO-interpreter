@@ -20,10 +20,8 @@ public class ProcedureDeclaration implements Node {
     public String getName() {
         return name;
     }
-    public ListIterator<Parameter> getParameters() {
-       return parameters.listIterator(0);
-    }
-    public ListIterator<Node> getChildren() {
-        return children.listIterator(0);
-    }
+    public ListIterator<Parameter> getParameters() { return parameters.listIterator(0); }
+    public ListIterator<Node> getChildren() { return children.listIterator(0); }
+    public Object getOutput() { return null; }
+    public void setOutput(Object output) {}
 }

@@ -14,4 +14,6 @@ public class ProcedureCall implements Node {
     public void accept(Visitor v) {
         v.visit(this);
     }
+    public Object getOutput() { return null; }
+    public void setOutput(Object output) {}
 }

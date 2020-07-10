@@ -18,4 +18,6 @@ public class SetPosition implements Node {
     public Node getExpressionY() {
         return expressionY;
     }
+    public Object getOutput() { return null; }
+    public void setOutput(Object output) {}
 }

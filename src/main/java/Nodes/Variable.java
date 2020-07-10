@@ -13,4 +13,6 @@ public class Variable implements Node {
     public String getName() {
         return name;
     }
+    public Object getOutput() { return null; }
+    public void setOutput(Object output) {}
 }

@@ -8,6 +8,7 @@ import java.util.ListIterator;
 
 public class ChildrenNode implements Node {
     private LinkedList<Node> children;
+    private Object output;
     public ChildrenNode() {
         children = new LinkedList<>();
     }
@@ -20,4 +21,6 @@ public class ChildrenNode implements Node {
     public ListIterator getChildren() {
         return children.listIterator(0);
     }
+    public Object getOutput() { return output; }
+    public void setOutput(Object output) { this.output = output; }
 }

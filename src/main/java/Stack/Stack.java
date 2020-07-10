@@ -3,13 +3,12 @@ package Stack;
 import Dictionary.Constants;
 import Dictionary.ErrorMessage;
 import Nodes.ProcedureDeclaration;
-import SymbolTable.VariableSymbol;
 
 import java.util.HashMap;
 
 public class Stack {
-    private HashMap<String, VariableSymbol>[] localVariables;
-    private static HashMap<String, VariableSymbol> globalVariables;
+    private HashMap<String, Object>[] localVariables;
+    private static HashMap<String, Object> globalVariables;
     private static HashMap<String, ProcedureDeclaration> procedures;
     private int level;
     public Stack() {
@@ -29,10 +28,10 @@ public class Stack {
     public boolean containsGlobalVariable(String variableName) {
         return globalVariables.containsKey(variableName);
     }
-    public void pushLocalVariable(String variableName, VariableSymbol value) {
+    public void pushLocalVariable(String variableName, Object value) {
         localVariables[level].put(variableName, value);
     }
-    public void pushGlobalVariable(String variableName, VariableSymbol value) {
+    public void pushGlobalVariable(String variableName, Object value) {
         globalVariables.put(variableName, value);
     }
     public void pushProcedureDeclaration(ProcedureDeclaration procedureDeclaration) {
@@ -51,15 +50,15 @@ public class Stack {
         else
             throw new Exception(ErrorMessage.PROCEDURE_NOT_FOUND + procedureName);
     }
-    public VariableSymbol getLocalVariable(String variableName, int level) throws Exception {
-        VariableSymbol variable = localVariables[level].get(variableName);
+    public Object getLocalVariable(String variableName, int level) throws Exception {
+        Object variable = localVariables[level].get(variableName);
         if (variable != null)
             return variable;
         else
             throw new Exception(ErrorMessage.VAR_NOT_FOUND + variableName);
     }
-    public VariableSymbol getGlobalVariable(String variableName) throws Exception {
-        VariableSymbol variable = globalVariables.get(variableName);
+    public Object getGlobalVariable(String variableName) throws Exception {
+        Object variable = globalVariables.get(variableName);
         if (variable != null)
             return variable;
         else

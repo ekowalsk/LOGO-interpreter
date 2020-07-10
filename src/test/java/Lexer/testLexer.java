@@ -40,10 +40,10 @@ public class testLexer {
     }
     @Test
     public void test4_RecognizeNumberAsFirstToken() {
-        initLexer("99,55");
+        initLexer("99.55");
         Token token = lexer.getCurrentToken();
         Assertions.assertEquals(LexemeType.NUMBER, token.getType(), "Type of lexeme should be NUMBER");
-        Assertions.assertEquals("99,55", token.getValue(), "Value of lexeme should be 99");
+        Assertions.assertEquals("99.55", token.getValue(), "Value of lexeme should be 99.55");
         Assertions.assertEquals(new Point(1, 1), token.getPosition(), "Position of token should be (1,1)");
     }
     @Test
