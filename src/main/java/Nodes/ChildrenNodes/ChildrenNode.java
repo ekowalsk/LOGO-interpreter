@@ -11,7 +11,7 @@ public class ChildrenNode implements Node {
     public ChildrenNode() {
         children = new LinkedList<>();
     }
-    public void accept(Visitor v) {
+    public void accept(Visitor v) throws Exception {
         v.visit(this);
     }
     public void add(Node node) {

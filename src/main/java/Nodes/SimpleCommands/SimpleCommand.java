@@ -5,7 +5,7 @@ import Visitors.Visitor;
 
 public abstract class SimpleCommand implements Node {
     @Override
-    public void accept(Visitor v) {
+    public void accept(Visitor v) throws Exception {
         v.visit(this);
     }
 }

@@ -9,7 +9,7 @@ public class SetPosition implements Node {
         this.expressionX = expressionX;
         this.expressionY = expressionY;
     }
-    public void accept(Visitor v) {
+    public void accept(Visitor v) throws Exception {
         v.visit(this);
     }
     public Node getExpressionX() {

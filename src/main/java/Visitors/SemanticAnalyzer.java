@@ -1,5 +1,6 @@
 package Visitors;
 
+import Dictionary.Constants;
 import Dictionary.ErrorMessage;
 import Nodes.*;
 import Nodes.ChildrenNodes.ChildrenNode;
@@ -17,7 +18,6 @@ import java.util.ListIterator;
 
 public class SemanticAnalyzer implements Visitor {
     private static SymbolTableScope scope;
-    private static final int MAX_NEST_LEVEL = 20;
     public SemanticAnalyzer() {
         if (scope == null)
             scope = new SymbolTableScope(0, null);
@@ -52,7 +52,7 @@ public class SemanticAnalyzer implements Visitor {
     public void visit(Parameter parameter) {}
     public void visit(ProcedureCall procedureCall) {}
     public void visit(ProcedureDeclaration procedureDeclaration) throws Exception {
-        if(scope.getScopeLevel() == MAX_NEST_LEVEL)
+        if(scope.getScopeLevel() == Constants.MAX_NEST_LEVEL)
             throw new Exception(ErrorMessage.MAX_NEST_LEXEL_EXCEED);
         ProcedureSymbol procedureSymbol = new ProcedureSymbol(procedureDeclaration.getName(), null);
         scope.define(procedureSymbol);
