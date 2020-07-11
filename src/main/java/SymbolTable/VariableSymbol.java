@@ -6,7 +6,5 @@ public class VariableSymbol extends Symbol {
         super(name);
         this.type = type;
     }
-    public String getType() {
-        return type;
-    }
+    public String getType() { return type; }
 }

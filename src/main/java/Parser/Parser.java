@@ -134,7 +134,7 @@ public class Parser {
         Token variableIdentifier = lexer.getCurrentToken();
         consumeToken(LexemeType.IDENT, ErrorMessage.IDENTIFIER_EXPECTED);
         consumeToken(LexemeType.ASSIGNOP, ErrorMessage.ASSIGNOP_EXPECTED);
-        return new Assignment(new Variable(variableIdentifier.getValue()), new VariableType(variableType.getValue()), expression());
+        return new Assignment(new Var(variableIdentifier.getValue()), new VariableType(variableType.getValue()), expression());
     }
     private IfElse ifelse() throws Exception {
         lexer.consume();
@@ -178,7 +178,7 @@ public class Parser {
         consumeToken(LexemeType.IDENT, ErrorMessage.IDENTIFIER_EXPECTED);
         Token type = lexer.getCurrentToken();
         consumeToken(LexemeType.TYPE, ErrorMessage.TYPE_EXPECTED);
-        parameters.add(new Parameter(new Variable(identifier.getValue()), new VariableType(type.getValue())));
+        parameters.add(new Parameter(new Var(identifier.getValue()), new VariableType(type.getValue())));
         if (currentTokenType() == LexemeType.SEPARATOR) {
             lexer.consume();
             readParameters(parameters);
@@ -221,9 +221,9 @@ public class Parser {
                 lexer.consume();
                 return number;
             case IDENT:
-                Variable variable = new Variable(lexer.getCurrentToken().getValue());
+                Var var = new Var(lexer.getCurrentToken().getValue());
                 lexer.consume();
-                return variable;
+                return var;
             case LBRACKET:
                 lexer.consume();
                 Node expression = expression();

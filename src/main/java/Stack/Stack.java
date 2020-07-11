@@ -7,8 +7,8 @@ import Nodes.ProcedureDeclaration;
 import java.util.HashMap;
 
 public class Stack {
-    private HashMap<String, Object>[] localVariables;
-    private static HashMap<String, Object> globalVariables;
+    private HashMap<String, Variable>[] localVariables;
+    private static HashMap<String, Variable> globalVariables;
     private static HashMap<String, ProcedureDeclaration> procedures;
     private int level;
     public Stack() {
@@ -28,11 +28,11 @@ public class Stack {
     public boolean containsGlobalVariable(String variableName) {
         return globalVariables.containsKey(variableName);
     }
-    public void pushLocalVariable(String variableName, Object value) {
-        localVariables[level].put(variableName, value);
+    public void pushLocalVariable(String variableName, String type, Object value) {
+        localVariables[level].put(variableName, new Variable(variableName, type, value));
     }
-    public void pushGlobalVariable(String variableName, Object value) {
-        globalVariables.put(variableName, value);
+    public void pushGlobalVariable(String variableName, String type, Object value) {
+        globalVariables.put(variableName, new Variable(variableName, type, value));
     }
     public void pushProcedureDeclaration(ProcedureDeclaration procedureDeclaration) {
         procedures.put(procedureDeclaration.getName(), procedureDeclaration);
@@ -50,15 +50,15 @@ public class Stack {
         else
             throw new Exception(ErrorMessage.PROCEDURE_NOT_FOUND + procedureName);
     }
-    public Object getLocalVariable(String variableName, int level) throws Exception {
-        Object variable = localVariables[level].get(variableName);
+    public Variable getLocalVariable(String variableName, int level) throws Exception {
+        Variable variable = localVariables[level].get(variableName);
         if (variable != null)
             return variable;
         else
             throw new Exception(ErrorMessage.VAR_NOT_FOUND + variableName);
     }
-    public Object getGlobalVariable(String variableName) throws Exception {
-        Object variable = globalVariables.get(variableName);
+    public Variable getGlobalVariable(String variableName) throws Exception {
+        Variable variable = globalVariables.get(variableName);
         if (variable != null)
             return variable;
         else
@@ -67,6 +67,7 @@ public class Stack {
     public void clearLocalVariables() {
         localVariables[level] = new HashMap<>();
     }
+    public int getLevel() { return level; }
     private void initLocalVariables() {
         localVariables  = new HashMap[Constants.MAX_NEST_LEVEL];
         for (int i = 0; i < Constants.MAX_NEST_LEVEL; i++)

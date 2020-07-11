@@ -3,19 +3,19 @@ package Nodes;
 import Visitors.Visitor;
 
 public class Assignment implements Node {
-    private final Variable variable;
+    private final Var var;
     private final VariableType type;
     private final Node expression;
     private Object output;
-    public Assignment (Variable variable, VariableType type, Node expression) {
-        this.variable = variable;
+    public Assignment (Var var, VariableType type, Node expression) {
+        this.var = var;
         this.type = type;
         this.expression = expression;
     }
     public void accept(Visitor v) throws Exception {
         v.visit(this);
     }
-    public Variable getVariable() { return variable; }
+    public Var getVar() { return var; }
     public VariableType getType() {
         return type;
     }

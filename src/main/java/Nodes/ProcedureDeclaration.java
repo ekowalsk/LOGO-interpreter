@@ -24,4 +24,6 @@ public class ProcedureDeclaration implements Node {
     public ListIterator<Node> getChildren() { return children.listIterator(0); }
     public Object getOutput() { return null; }
     public void setOutput(Object output) {}
+    public int parametersCount() { return parameters.size(); }
+    public Parameter getParameter(int index) { return parameters.get(index); }
 }

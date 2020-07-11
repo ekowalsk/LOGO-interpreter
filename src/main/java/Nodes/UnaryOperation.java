@@ -16,4 +16,5 @@ public class UnaryOperation implements Node {
     public Node getExpression() { return expression; }
     public Object getOutput() {return output; }
     public void setOutput(Object output) { this.output = output; }
+    public String getOperator() { return operator; }
 }

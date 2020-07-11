@@ -15,7 +15,7 @@ public interface Visitor {
     void visit(Color color);
     void visit(ColorCommand colorCommand);
     void visit(BinaryOperation binaryOperation) throws Exception;
-    void visit(Variable variable) throws Exception;
+    void visit(Var var) throws Exception;
     void visit(VariableType variableType);
     void visit(Assignment assignment) throws Exception;
     void visit(UnaryOperation unaryOperation) throws Exception;
@@ -23,7 +23,7 @@ public interface Visitor {
     void visit(SetPosition setPosition) throws Exception;
     void visit(ChildrenNode childrenNode)throws Exception;
     void visit(IfElse ifElse) throws Exception;
-    void visit(ProcedureCall procedureCall);
+    void visit(ProcedureCall procedureCall) throws Exception;
     void visit(ProcedureDeclaration procedureDeclaration) throws Exception;
     void visit(Parameter param);
     void visit(Strings strings);

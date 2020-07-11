@@ -2,9 +2,10 @@ package Nodes;
 
 import Visitors.Visitor;
 
-public class Variable implements Node {
+public class Var implements Node {
     private final String name;
-    public Variable(String name) {
+    private Object output;
+    public Var(String name) {
         this.name = name;
     }
     public void accept (Visitor v) throws Exception {
@@ -13,6 +14,6 @@ public class Variable implements Node {
     public String getName() {
         return name;
     }
-    public Object getOutput() { return null; }
-    public void setOutput(Object output) {}
+    public Object getOutput() { return output; }
+    public void setOutput(Object output) { this.output = output; }
 }

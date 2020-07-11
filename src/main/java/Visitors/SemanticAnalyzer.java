@@ -23,8 +23,8 @@ public class SemanticAnalyzer implements Visitor {
             scope = new SymbolTableScope(0, null);
     }
     public void visit(Assignment assignment) throws Exception {
-        if (!scope.contains(assignment.getVariable().getName()))
-            declareSymbol(assignment.getVariable(), assignment.getType());
+        if (!scope.contains(assignment.getVar().getName()))
+            declareSymbol(assignment.getVar(), assignment.getType());
         assignment.getExpression().accept(this);
     }
     public void visit(BinaryOperation binaryOperation) throws Exception {
@@ -82,14 +82,14 @@ public class SemanticAnalyzer implements Visitor {
     public void visit(UnaryOperation unaryOperation) throws Exception {
         unaryOperation.getExpression().accept(this);
     }
-    public void visit(Variable variable) throws Exception {
-        scope.find(variable.getName());
+    public void visit(Var var) throws Exception {
+        scope.find(var.getName());
     }
     private VariableSymbol createParameterSymbol(Parameter parameter) throws Exception {
         Symbol parameterType = scope.find(parameter.getType().getName());
         return new VariableSymbol(parameter.getVar().getName(), parameterType.getName());
     }
-    private void declareSymbol(Variable var, VariableType type) throws Exception {
+    private void declareSymbol(Var var, VariableType type) throws Exception {
         Symbol typeSymbol = scope.find(type.getName());
         VariableSymbol variableSymbol = new VariableSymbol(var.getName(), typeSymbol.getName());
         scope.define(variableSymbol);

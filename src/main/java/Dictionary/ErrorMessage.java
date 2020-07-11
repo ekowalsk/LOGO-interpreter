@@ -19,4 +19,6 @@ public class ErrorMessage {
     public static final String PROCEDURE_NOT_FOUND = " procedure not found: ";
     public static final String VAR_NOT_FOUND = " variable not found: ";
     public static final String WRONG_OPERATOR = " wrong operator: ";
+    public static final String WRONG_EXPRESSION_REPEAT = " expression in REPEAT statement should be integer and greater than 0 ";
+    public static final String ARGUMENTS_NO_MISMATCH = " arguments number mismatch in: ";
 }
